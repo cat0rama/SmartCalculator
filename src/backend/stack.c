@@ -3,22 +3,20 @@
 
 #include <stdlib.h>
 #include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
 
 // Check if type is available
 static inline bool type_checker(const enum eType st_type) {
-    return st_type >= ALL || st_type <= MIN ? false : true;
+    return st_type >= MAX || st_type <= MIN ? false : true;
 }
 
 // Check pointer
-static inline bool check_ptr(const stack* const st) {
+static inline bool check_stack_ptr(const stack* const st) {
     return !st || !st->m_data ? false : true; 
 }
 
-int create_stack(stack* st_new, const size_t st_size, const enum eType st_type) {
+enum eError create_stack(stack* st_new, const size_t st_size, const enum eType st_type) {
     if (!st_new || !type_checker(st_type) || st_size < 0) {
-        fprintf(stderr, "invalid args provided\n");
+        LOGGER(stderr, "invalid args provided(create_stack)\n");
         return E_INVALID_ARGS;
     }
 
@@ -30,22 +28,22 @@ int create_stack(stack* st_new, const size_t st_size, const enum eType st_type) 
     st_new->m_data = calloc(st_new->m_capacity, sizeof(*st_new->m_data));
 
     if (!st_new->m_data) {
-        fprintf(stderr, "calloc() failed\n");
+        perror("calloc() failed\n");
         return E_ALLOCATION_ERROR;
     }
-
+    
     return E_SUCCES;
 }
 
-void destroy_stack(stack* stack) {
-    if (stack && stack->m_data) {
+void destroy_stack(const stack* const stack) {
+    if (check_stack_ptr(stack)) {
         free(stack->m_data);
     }
 }
 
-int push_stack(stack* const st, ...) {
-    if (!check_ptr(st)) {
-        puts("invalid args provided");
+enum eError push_stack(stack* const st, ...) {
+    if (!check_stack_ptr(st)) {
+        LOGGER(stderr, "invalid args provided(push_stack)\n");
         return E_INVALID_ARGS;
     }
 
@@ -56,7 +54,7 @@ int push_stack(stack* const st, ...) {
         st->m_capacity = st->m_capacity * 2;
         union stack_data* tmp = realloc(st->m_data, st->m_capacity * sizeof(*st->m_data));
         if (!tmp) {
-            fprintf(stderr, "realloc() failed\n");
+            perror("realloc() failed\n");
             return E_ALLOCATION_ERROR;
         } else {
             st->m_data = tmp;
@@ -65,6 +63,9 @@ int push_stack(stack* const st, ...) {
 
     switch (st->m_type) 
     {
+    case MIN:
+        break;
+
     case T_DOUBLE:
         st->m_data[st->m_top++].var_d = va_arg(list, double);
         break;
@@ -80,6 +81,9 @@ int push_stack(stack* const st, ...) {
     case T_VOID_PTR:
         st->m_data[st->m_top++].var_vp = va_arg(list, void*);
         break;
+
+    case MAX:
+        break;
     }
 
     va_end(list);
@@ -87,14 +91,20 @@ int push_stack(stack* const st, ...) {
     return E_SUCCES;
 }
 
-int pop_stack(stack* const st, void* elem) {
-    if (!check_ptr(st) || !elem) {
-        fprintf(stderr, "invalid args provided\n");
+enum eError pop_stack(stack* const st, void* elem) {
+    if (!check_stack_ptr(st) || !elem) {
+        LOGGER(stderr, "invalid args provided(pop_stack)\n");
         return E_INVALID_ARGS;
+    } else if (st->m_top <= 0) {
+        LOGGER(stderr, "stack is empty\n");
+        return E_EMPTY;
     }
 
     switch (st->m_type) 
     {
+    case MIN:
+        break;
+
     case T_DOUBLE:
         *(double*)elem = st->m_data[--st->m_top].var_d;
         break;
@@ -110,11 +120,14 @@ int pop_stack(stack* const st, void* elem) {
     case T_VOID_PTR:
         *(void**)elem = st->m_data[--st->m_top].var_vp;
         break;
+    
+    case MAX:
+        break;
     }
 
     return E_SUCCES;
 }
 
 bool is_empty_stack(const stack* st) {
-    return check_ptr(st) && st->m_top == 0;
+    return !check_stack_ptr(st) || st->m_top == 0;
 }

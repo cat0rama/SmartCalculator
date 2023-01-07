@@ -22,13 +22,13 @@ typedef struct {
     union stack_data* m_data;
 } stack;
 
-int create_stack(stack* st_new, const size_t st_size, const enum eType st_type);
+enum eError create_stack(stack* st_new, const size_t st_size, const enum eType st_type);
 
-void destroy_stack(stack* stack);
+void destroy_stack(const stack* const stack);
 
-int push_stack(stack* const st, ...);
+enum eError push_stack(stack* const st, ...);
 
-int pop_stack(stack* const st, void* elem);
+enum eError pop_stack(stack* const st, void* elem);
 
 bool is_empty_stack(const stack* st);
 
