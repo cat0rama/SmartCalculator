@@ -49,11 +49,19 @@ The SmartCalc v1.0 program must be implemented:
       | Computes square root | sqrt(x) |
       | Computes natural logarithm | ln(x) |
       | Computes common logarithm | log(x) |
+## Main goals
+1) Write a backend in pure C11.
+2) Write GUI on C++ with Qt.
 ## Requirements
 ```bash
 sudo apt install cmake lcov doxygen build-essential
 sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 ```
-## Main goals
-1) Write a backend in pure C11.
-2) Write GUI on C++ with Qt.
+## Build & Run
+```bash
+cd src && make install
+```
+## Run Tests
+```bash
+cd src && make gcov_report
+```
