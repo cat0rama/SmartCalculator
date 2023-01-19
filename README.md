@@ -65,3 +65,8 @@ cd src && make install
 ```bash
 cd src && make gcov_report
 ```
+## Screenshots
+### Making Graph
+![SmartCalc](https://github.com/Retr0Wawe/SmartCalculator/tree/main/screenshots/graph.png "Graph")
+### Calculate Expression
+![SmartCalc](https://github.com/Retr0Wawe/SmartCalculator/tree/main/screenshots/calculate.png "Graph")
