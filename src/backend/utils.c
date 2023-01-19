@@ -1,27 +1,36 @@
 #include "include/utils.h"
 
 #include <stdio.h>
+#include <string.h>
 
-enum eToken is_operator(const char sym) {
-    switch (sym)
-    {
-    case '+':
-        return O_ADD;
-    case '-':
-        return O_SUB;
-    case '/':
-        return O_DIV;
-    case '*':
-        return O_MUL;
-    case '^':
-        return O_EXP;
+#include "include/stack.h"
+
+bool validate_parentheses(const char* str) {
+    if (!str) {
+        LOGGER(stderr, "invalid arg provided(validate_parentheses)\n");
+        return false;
     }
 
-    return O_UNKNOWN;
-}
+    bool err_flag = 0;
+    stack st;
 
-enum eToken is_function(const char* string) {
-    // доделать(Сагьрай лезгияр)
+    create_stack(&st, 10, T_CHAR);
 
-    return O_UNKNOWN;
+    for (size_t i = 0; i < strlen(str); i++) {
+        if (str[i] == '(') {
+            push_stack(&st, str[i]);
+        } else if (!is_empty_stack(&st) && get_char_top(&st) == '(' && str[i] == ')') {
+            pop_stack(&st, NULL);
+        } else if (str[i] == '(' || str[i] == ')') {
+            push_stack(&st, str[i]);
+        }
+    }
+
+    if (is_empty_stack(&st)) {
+        err_flag = true;
+    }
+
+    destroy_stack(&st);
+
+    return err_flag;
 }
