@@ -1,53 +1,59 @@
-# SmartCalcV1.0
-## Part 1. Реализация SmartCalc v1.0
+## Implementation of SmartCalc v1.0
 
-Необходимо реализовать программу SmartCalc v1.0:
+The SmartCalc v1.0 program must be implemented:
 
-- Программа должна быть разработана на языке Си стандарта C11 с использованием компилятора gcc. Допустимо использование дополнительных библиотек и модулей QT
-- Код программы должен находиться в папке src 
-- Сборка программы должна быть настроена с помощью Makefile со стандартным набором целей для GNU-программ: all, install, uninstall, clean, dvi, dist, tests, gcov_report. Установка должна вестись в любой другой произвольный каталог
-- Программа должна быть разработана в соответствии с принципами структурного программирования
-- При написании кода необходимо придерживаться Google Style
-- Должно быть обеспечено покрытие unit-тестами модулей, связанных с вычислением выражений, с помощью библиотеки Check
-- Реализация с графическим пользовательским интерфейсом, на базе любой GUI-библиотеки с API для C89/C99/C11 (GTK+, Nuklear, raygui, microui, libagar, libui, IUP, LCUI, CEF, Qt, etc.)
-- На вход программы могут подаваться как целые числа, так и вещественные числа, записанные через точку. По желанию можно обрабатывать ввод чисел в экспоненциальной записи
-- Вычисление должно производиться после полного ввода вычисляемого выражения и нажатия на символ `=`
-- Вычисление произвольных скобочных арифметических выражений в инфиксной нотации
-- Вычисление произвольных скобочных арифметических выражений в инфиксной нотации с подстановкой значения переменной _x_ в виде числа
-- Построение графика функции, заданной с помощью выражения в инфиксной нотации с переменной _x_  (с координатными осями, отметкой используемого масштаба и сеткой с адаптивным шагом)
-    - Не требуется предоставлять пользователю возможность менять масштаб
-- Область определения и область значения функций ограничиваются по крайней мере числами от -1000000 до 1000000
-    - Для построения графиков функции необходимо дополнительно указывать отображаемые область определения и область значения
-- Проверяемая точность дробной части - минимум 7 знаков после запятой
-- У пользователя должна быть возможность ввода до 255 символов
-- Скобочные арифметические выражения в инфиксной нотации должны поддерживать следующие арифметические операции и математические функции:
-    - **Арифметические операторы**:
+- The program must be developed in C language of C11 standard using gcc compiler. You can use any additional QT libraries and modules
+- The program code must be located in the src folder
+- The program must be built with Makefile which contains standard set of targets for GNU-programs: all, install, uninstall, clean, dvi, dist, tests, gcov_report. Installation directory could be arbitrary, except the building one
+- The program must be developed according to the principles of structured programming
+- When writing code it is necessary to follow the Google style
+- Prepare full coverage of modules related to calculating expressions with unit-tests using the Check library
+- GUI implementation, based on any GUI library with API for C89/C99/C11 (GTK+, Nuklear, raygui, microui, libagar, libui, IUP, LCUI, CEF, Qt, etc.)
+- Both integers and real numbers with a dot can be input into the program. You can optionally provide the input of numbers in exponential notation
+- The calculation must be done after you complete entering the calculating expression and press the `=` symbol.
+- Calculating arbitrary bracketed arithmetic expressions in infix notation
+- Calculate arbitrary bracketed arithmetic expressions in infix notation with substitution of the value of the variable _x_ as a number
+- Plotting a graph of a function given by an expression in infix notation with the variable _x_ (with coordinate axes, mark of the used scale and an adaptive grid)
+    - It is not necessary to provide the user with the ability to change the scale
+- Domain and codomain of a function are limited to at least numbers from -1000000 to 1000000
+    - To plot a graph of a function it is necessary to additionally specify the displayed domain and codomain
+- Verifiable accuracy of the fractional part is at least to 7 decimal places
+- Users must be able to enter up to 255 characters
+- Bracketed arithmetic expressions in infix notation must support the following arithmetic operations and mathematical functions:
+    - **Arithmetic operators**:
 
-        | Название оператора | Инфиксная нотация <br /> (Классическая) | Префиксная нотация <br /> (Польская нотация) |  Постфиксная нотация <br /> (Обратная польская нотация) |
-        | ------ | ------ | ------ | ------ |
-        | Скобки | (a + b) | (+ a b) | a b + |
-        | Сложение | a + b | + a b | a b + |
-        | Вычитание | a - b | - a b | a b - |
-        | Умножение | a * b | * a b | a b * |
-        | Деление | a / b | / a b | a b \ |
-        | Возведение в степень | a ^ b | ^ a b | a b ^ |
-        | Остаток от деления | a mod b | mod a b | a b mod |
-        | Унарный плюс | +a | +a | a+ |
-        | Унарный минус | -a | -a | a- |
+      | Operator name | Infix notation <br /> (Classic) | Prefix notation <br /> (Polish notation) |  Postfix notation <br /> (Reverse Polish notation) |
+      | --------- | ------ | ------ | ------ |
+      | Brackets | (a + b) | (+ a b) | a b + |
+      | Addition | a + b | + a b | a b + |
+      | Subtraction | a - b | - a b | a b - |
+      | Multiplication | a * b | * a b | a b * |
+      | Division | a / b | / a b | a b \ |
+      | Power | a ^ b | ^ a b | a b ^ |
+      | Modulus | a mod b | mod a b | a b mod |
+      | Unary plus | +a | +a | a+ |
+      | Unary minus | -a | -a | a- |
 
-        >Обратите внимание, что оператор умножения содержит обязательный знак `*`. Обработка выражения с опущенным знаком `*` является необязательной и остается на усмотрение разработчика
+      >Note that the multiplication operator contains the obligatory sign `*`. Processing an expression with the omitted `*` sign is optional and is left to the developer's decision
 
-    - **Функции**:
+    - **Functions**:
   
-        | Описание функции | Функция |   
-        | ---------------- | ------- |  
-        | Вычисляет косинус | cos(x) |   
-        | Вычисляет синус | sin(x) |  
-        | Вычисляет тангенс | tan(x) |  
-        | Вычисляет арккосинус | acos(x) | 
-        | Вычисляет арксинус | asin(x) | 
-        | Вычисляет арктангенс | atan(x) |
-        | Вычисляет квадратный корень | sqrt(x) |
-        | Вычисляет натуральный логарифм | ln(x) | 
-        | Вычисляет десятичный логарифм | log(x) |
-
+      | Function description | Function |
+      | ------ | ------ |
+      | Computes cosine | cos(x) |
+      | Computes sine | sin(x) |
+      | Computes tangent | tan(x) |
+      | Computes arc cosine | acos(x) |
+      | Computes arc sine | asin(x) |
+      | Computes arc tangent | atan(x) |
+      | Computes square root | sqrt(x) |
+      | Computes natural logarithm | ln(x) |
+      | Computes common logarithm | log(x) |
+## Requirements
+```bash
+sudo apt install cmake lcov doxygen build-essential
+sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+```
+## Main goals
+1) Write a backend in pure C11.
+2) Write GUI on C++ with Qt.
