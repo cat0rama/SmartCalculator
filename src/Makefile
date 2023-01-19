@@ -1,5 +1,5 @@
 CC := gcc
-FLAGS := -Wall -Wextra -Werror -lm
+FLAGS := -Wall -Wextra -Werror -lm -std=c11
 
 DEBUG_FLAGS := -g -fsanitize=address
 
