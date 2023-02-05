@@ -50,7 +50,7 @@ The SmartCalc v1.0 program must be implemented:
       | Computes natural logarithm | ln(x) |
       | Computes common logarithm | log(x) |
 ## Main goals
-1) Write a backend in pure C11.
+1) Write a backend on pure C11.
 2) Write GUI on C++ with Qt.
 ## Requirements
 ```bash
