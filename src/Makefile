@@ -1,8 +1,6 @@
 CC := gcc
 FLAGS := -Wall -Wextra -Werror -lm -std=c11
-
 DEBUG_FLAGS := -g -fsanitize=address
-
 SOURCE_PATH := backend
 CHECK_FLAGS := -lcheck -lsubunit -coverage -pthread -lrt
 
@@ -37,7 +35,6 @@ dist: clean
 	mkdir Archive_SmartCalc_v1.0
 	cp Makefile backend/*.c backend/include/*.h gui/*.cpp gui/*.h gui/include/*.h  gui/*.ui Archive_SmartCalc_v1.0/
 	tar cvzf Archive_SmartCalc_v1.0.tgz Archive_SmartCalc_v1.0/	
-
 
 gcov_report: clean
 	$(CC) $(FLAGS) $(SOURCE_PATH)/*.c tests/*.c -lm $(CHECK_FLAGS) -o gcov_main
